@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "36639901264",
+    "project_id": "geo-loc-e9a5b",
+    "storage_bucket": "geo-loc-e9a5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36639901264:android:caa40b3e0ea8fdf507b355",
+        "android_client_info": {
+          "package_name": "com.example.geoloc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36639901264-bho51do55bbsrh0sjcdb06orcu9jo93q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn0xBWGcHZLlbA8kCy22CO81rdlc_0gdk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36639901264-bho51do55bbsrh0sjcdb06orcu9jo93q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
