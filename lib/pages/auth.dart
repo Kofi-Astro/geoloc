@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:geoloc/services/auth.dart';
 import '../pages/home.dart';
 
 import '../widgets/custom_text_form_field.dart';
 // import '../model/user_model.dart';
 
 class AuthPage extends StatelessWidget {
-  // final IAuthRouter router;
   const AuthPage({super.key});
   static const route = '/auth';
 
@@ -31,7 +31,10 @@ class AuthPage extends StatelessWidget {
 }
 
 class AuthCard extends StatefulWidget {
-  const AuthCard({super.key});
+  const AuthCard({super.key, this.auth, this.loginCallback});
+
+  final BaseAuth? auth;
+  final VoidCallback? loginCallback;
 
   @override
   State<AuthCard> createState() => _AuthCardState();
