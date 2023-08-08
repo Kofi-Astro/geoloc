@@ -43,7 +43,7 @@ class _AttendancePageState extends State<AttendancePage> {
       ),
       body: Stack(children: [
         googleMap(context),
-        // buildContainer(),
+        buildContainer(),
       ]),
     );
   }
@@ -134,8 +134,8 @@ class _AttendancePageState extends State<AttendancePage> {
 
   Widget googleMap(BuildContext context) {
     return SizedBox(
-        height: MediaQuery.of(context).size.height * 0.5,
-        width: MediaQuery.of(context).size.width * 0.5,
+        height: MediaQuery.of(context).size.height, //* 0.5,
+        width: MediaQuery.of(context).size.width, //* 0.5,
         child: GoogleMap(
           mapType: MapType.hybrid,
           initialCameraPosition: _kGooglePlex,

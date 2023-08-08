@@ -4,7 +4,7 @@ import '../pages/home.dart';
 
 import '../widgets/custom_text_form_field.dart';
 // import '../model/user_model.dart';
-import 'package:firebase_database/firebase_database.dart';
+// import 'package:firebase_database/firebase_database.dart';
 
 class AuthPage extends StatefulWidget {
   static const route = '/auth';
@@ -18,9 +18,12 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   late BaseAuth auth;
   // final VoidCallback? loginCallback;
+  // final VoidCallback? loginCallback;
+  // final VoidCallback? loginCallback;
+  // final VoidCallback? loginCallback;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  FirebaseDatabase db = FirebaseDatabase.instance;
-  late DatabaseReference _empIdRef;
+  // FirebaseDatabase db = FirebaseDatabase.instance;
+  // late DatabaseReference _empIdRef;
 
   final _passwordController = TextEditingController();
 

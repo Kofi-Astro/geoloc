@@ -9,7 +9,7 @@ class DashBoardPage extends StatefulWidget {
   final AnimationController? controller;
   const DashBoardPage({super.key, this.controller});
 
-  // <meta-data android:name="com.google.android.geo.API_KEY" 
+  // <meta-data android:name="com.google.android.geo.API_KEY"
   //                       android:value="AIzaSyDn0xBWGcHZLlbA8kCy22CO81rdlc_0gdk"/>
 
   @override
@@ -160,68 +160,62 @@ class DashboardMainPanel extends StatelessWidget {
   }
 }
 
-
-
-
-
-
-
- // return Scaffold(
-    //   backgroundColor: const Color(0xffffffff),
-    //   appBar: PreferredSize(
-    //     preferredSize: const Size.fromHeight(90.0),
-    //     child: AppBar(
-    //       leading: const Padding(
-    //         padding: EdgeInsets.all(21),
-    //         child: Icon(
-    //           Icons.equalizer,
-    //           color: Colors.deepPurpleAccent,
-    //           size: 50,
-    //         ),
-    //       ),
-    //       title: const Padding(
-    //         padding: EdgeInsets.only(top: 35, left: 8),
-    //         child: Text(
-    //           'DASHBOARD',
-    //           style: TextStyle(
-    //               fontSize: 20,
-    //               color: Colors.blue,
-    //               fontWeight: FontWeight.w900),
-    //         ),
-    //       ),
-    //       flexibleSpace: Container(
-    //         decoration: const BoxDecoration(
-    //           gradient: LinearGradient(
-    //               colors: [
-    //                 Color(0xffffffff),
-    //                 Color(0xffffffff),
-    //               ],
-    //               begin: FractionalOffset(
-    //                 0.0,
-    //                 0.0,
-    //               ),
-    //               end: FractionalOffset(1.0, 0.0),
-    //               stops: [0.0, 1.0],
-    //               tileMode: TileMode.clamp),
-    //         ),
-    //       ),
-    //       elevation: 10,
-    //     ),
-    //   ),
-    //   body: Padding(
-    //     padding: const EdgeInsets.all(8),
-    //     child: StaggeredGrid.count(
-    //       crossAxisCount: 2,
-    //       crossAxisSpacing: 12,
-    //       mainAxisSpacing: 12,
-    //       children: _listWidget(),
-    //     ),
-    //   ),
-    // ); // List<StaggeredGridTile> _staggeredTiles(int index) {
-  //   List<StaggeredGridTile> widgets = [];
-  //   tileData.forEach((tile) {
-  //     widgets.add(StaggeredGridTile.extent(
-  //         crossAxisCellCount: 1, mainAxisExtent: 210, child: tile[index]));
-  //   });
-  //   return widgets;
-  // }
+// return Scaffold(
+//   backgroundColor: const Color(0xffffffff),
+//   appBar: PreferredSize(
+//     preferredSize: const Size.fromHeight(90.0),
+//     child: AppBar(
+//       leading: const Padding(
+//         padding: EdgeInsets.all(21),
+//         child: Icon(
+//           Icons.equalizer,
+//           color: Colors.deepPurpleAccent,
+//           size: 50,
+//         ),
+//       ),
+//       title: const Padding(
+//         padding: EdgeInsets.only(top: 35, left: 8),
+//         child: Text(
+//           'DASHBOARD',
+//           style: TextStyle(
+//               fontSize: 20,
+//               color: Colors.blue,
+//               fontWeight: FontWeight.w900),
+//         ),
+//       ),
+//       flexibleSpace: Container(
+//         decoration: const BoxDecoration(
+//           gradient: LinearGradient(
+//               colors: [
+//                 Color(0xffffffff),
+//                 Color(0xffffffff),
+//               ],
+//               begin: FractionalOffset(
+//                 0.0,
+//                 0.0,
+//               ),
+//               end: FractionalOffset(1.0, 0.0),
+//               stops: [0.0, 1.0],
+//               tileMode: TileMode.clamp),
+//         ),
+//       ),
+//       elevation: 10,
+//     ),
+//   ),
+//   body: Padding(
+//     padding: const EdgeInsets.all(8),
+//     child: StaggeredGrid.count(
+//       crossAxisCount: 2,
+//       crossAxisSpacing: 12,
+//       mainAxisSpacing: 12,
+//       children: _listWidget(),
+//     ),
+//   ),
+// ); // List<StaggeredGridTile> _staggeredTiles(int index) {
+//   List<StaggeredGridTile> widgets = [];
+//   tileData.forEach((tile) {
+//     widgets.add(StaggeredGridTile.extent(
+//         crossAxisCellCount: 1, mainAxisExtent: 210, child: tile[index]));
+//   });
+//   return widgets;
+// }
