@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+// import './attendance_recorder.dart';
+import '../constants/dashboard_tile_info.dart';
+
 class DashBoardPage extends StatefulWidget {
   final AnimationController? controller;
   const DashBoardPage({super.key, this.controller});
+
+  // <meta-data android:name="com.google.android.geo.API_KEY" 
+  //                       android:value="AIzaSyDn0xBWGcHZLlbA8kCy22CO81rdlc_0gdk"/>
 
   @override
   State<DashBoardPage> createState() => _DashBoardPageState();
@@ -12,6 +18,7 @@ class DashBoardPage extends StatefulWidget {
 
 class _DashBoardPageState extends State<DashBoardPage> {
   static const header_height = 100.0;
+
   Animation<RelativeRect> getPanelAnimation(BoxConstraints constraints) {
     final height = constraints.biggest.height;
     final backPanelHeight = height - header_height;
@@ -71,25 +78,19 @@ class _DashBoardPageState extends State<DashBoardPage> {
 }
 
 class DashboardMainPanel extends StatelessWidget {
-  List<Widget> _listWidget() {
+  final List tileData = infoAboutTiles;
+
+  List<Widget> _listWidget(BuildContext context) {
     List<Widget> widgets = [];
     tileData.forEach((tile) {
-      widgets.add(buildTile(tile[0], tile[1], tile[2], tile[3]));
-    });
-    return widgets;
-  }
-
-  List<StaggeredGridTile> _staggeredTiles(int index) {
-    List<StaggeredGridTile> widgets = [];
-    tileData.forEach((tile) {
-      widgets.add(StaggeredGridTile.extent(
-          crossAxisCellCount: 1, mainAxisExtent: 210, child: tile[index]));
+      widgets.add(buildTile(tile[0], tile[1], tile[2], context, tile[3]));
     });
     return widgets;
   }
 
   Widget buildTile(
-      IconData icon, String title, String subtitle, Function() onTap) {
+      IconData icon, String title, String subtitle, BuildContext context,
+      [Function(BuildContext)? onTap]) {
     return Material(
       elevation: 10,
       shadowColor: Colors.deepPurpleAccent,
@@ -97,7 +98,9 @@ class DashboardMainPanel extends StatelessWidget {
       color: Colors.deepPurpleAccent,
       child: InkWell(
         onTap: onTap != null
-            ? () => onTap()
+            ? () {
+                onTap(context);
+              }
             : () {
                 print('Not set yet');
               },
@@ -145,7 +148,25 @@ class DashboardMainPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: StaggeredGrid.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        children: _listWidget(context),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+ // return Scaffold(
     //   backgroundColor: const Color(0xffffffff),
     //   appBar: PreferredSize(
     //     preferredSize: const Size.fromHeight(90.0),
@@ -196,43 +217,11 @@ class DashboardMainPanel extends StatelessWidget {
     //       children: _listWidget(),
     //     ),
     //   ),
-    // );
-
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: StaggeredGrid.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        children: _listWidget(),
-      ),
-    );
-  }
-
-  List<List> tileData = [
-    [
-      Icons.record_voice_over,
-      'Attendance Recorder',
-      'Mark In and Out Time',
-      () {}
-    ],
-    [
-      Icons.record_voice_over,
-      'Attendace Summary',
-      'Check previous Records',
-      () {}
-    ],
-    [
-      Icons.record_voice_over,
-      'Attendance Recorder',
-      'Mark In and Out Time',
-      () {}
-    ],
-    [
-      Icons.record_voice_over,
-      'Attendace Summary',
-      'Check previous Records',
-      () {}
-    ],
-  ];
-}
+    // ); // List<StaggeredGridTile> _staggeredTiles(int index) {
+  //   List<StaggeredGridTile> widgets = [];
+  //   tileData.forEach((tile) {
+  //     widgets.add(StaggeredGridTile.extent(
+  //         crossAxisCellCount: 1, mainAxisExtent: 210, child: tile[index]));
+  //   });
+  //   return widgets;
+  // }

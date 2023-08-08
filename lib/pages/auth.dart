@@ -4,55 +4,118 @@ import '../pages/home.dart';
 
 import '../widgets/custom_text_form_field.dart';
 // import '../model/user_model.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-class AuthPage extends StatelessWidget {
-  const AuthPage({super.key});
+class AuthPage extends StatefulWidget {
   static const route = '/auth';
+
+  AuthPage();
+
+  @override
+  State<AuthPage> createState() => _AuthPageState();
+}
+
+class _AuthPageState extends State<AuthPage> {
+  late BaseAuth auth;
+  // final VoidCallback? loginCallback;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  FirebaseDatabase db = FirebaseDatabase.instance;
+  late DatabaseReference _empIdRef;
+
+  final _passwordController = TextEditingController();
+
+  final _emailController = TextEditingController();
+
+  String? _email;
+
+  String? _password;
+
+  bool _isLoading = false;
+  bool _isLoginForm = true;
+
+  @override
+  void initState() {
+    auth = Auth();
+    _isLoading = false;
+    _isLoginForm = true;
+
+    // _empIdRef = db.ref().child('')
+    super.initState();
+  }
+
+  Future<void> _userSignIn() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String userId = '';
+    _email = _emailController.text;
+    _password = _passwordController.text;
+
+    print(_email);
+
+    try {
+      if (_isLoginForm) {
+        userId = await auth.signIn(_email!, _password!);
+
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
+      } else {
+        userId = await auth.signUp(_email!, _password!);
+      }
+    } catch (e) {
+      showUserNotFoundError(context);
+      print(e);
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void _submit() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+    _userSignIn();
+  }
+
+  void toggleFormMode() {
+    setState(() {
+      _formKey.currentState!.reset();
+      _isLoginForm = !_isLoginForm;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
             height: deviceSize.height,
             width: deviceSize.width,
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [Flexible(child: AuthCard())],
+              children: [
+                Flexible(
+                    child: Container(
+                  height: deviceSize.height * 0.7,
+                  width: deviceSize.width * 0.9,
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: _buildContent(),
+                ))
+              ],
             ),
           ),
         ),
       ),
     );
-  }
-}
-
-class AuthCard extends StatefulWidget {
-  const AuthCard({super.key, this.auth, this.loginCallback});
-
-  final BaseAuth? auth;
-  final VoidCallback? loginCallback;
-
-  @override
-  State<AuthCard> createState() => _AuthCardState();
-}
-
-class _AuthCardState extends State<AuthCard> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  final _passwordController = TextEditingController();
-  final _usernameController = TextEditingController();
-
-  String? _username;
-  String? _password;
-  bool _isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   void showUserNotFoundError(BuildContext context) {
@@ -75,40 +138,9 @@ class _AuthCardState extends State<AuthCard> {
     );
   }
 
-  Future<void> _userSignIn() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      // _user = User(
-      //   password: _password,
-      //   username: _username,
-      // );
-      Navigator.of(context).pushNamed(HomeScreen.routeName);
-      // _userService!.loginUser(_user!);
-    } catch (e) {
-      // showUserNotFoundError(context);
-      print(e);
-    }
-
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
-  void _submit() {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    _formKey.currentState!.save();
-    _userSignIn();
-  }
-
   Widget _buildCircularProgressIndicator() {
     _passwordController.clear();
-    _usernameController.clear();
+    _emailController.clear();
 
     return const Center(
       child: CircularProgressIndicator(),
@@ -135,15 +167,15 @@ class _AuthCardState extends State<AuthCard> {
               height: 30,
             ),
             CustomTextFormField(
-              controller: _usernameController,
-              labelText: 'Username',
+              controller: _emailController,
+              labelText: 'Email',
               validatorFunction: (value) {
                 if (value.isEmpty) {
                   return 'Invalid User';
                 }
               },
               onSavedFunction: (value) {
-                _username = value;
+                _email = value;
               },
             ),
             CustomTextFormField(
@@ -161,12 +193,16 @@ class _AuthCardState extends State<AuthCard> {
             ),
             ElevatedButton(
               onPressed: _submit,
-              child: const Text('LOGIN'),
+              child: Text(_isLoginForm ? 'LOGIN' : 'SIGN UP'),
             ),
             SizedBox(
               height: 25,
             ),
-            TextButton(onPressed: () {}, child: Text('SIGN UP'))
+            TextButton(
+                onPressed: toggleFormMode,
+                child: Text(_isLoginForm
+                    ? ' Create an account'
+                    : 'Have an account? Sign In'))
           ],
         ),
       ),
@@ -179,17 +215,5 @@ class _AuthCardState extends State<AuthCard> {
     } else {
       return _buildSignIn();
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
-
-    return Container(
-      height: deviceSize.height * 0.7,
-      width: deviceSize.width * 0.9,
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: _buildContent(),
-    );
   }
 }

@@ -4,17 +4,17 @@ import 'package:geoloc/pages/home.dart';
 
 import './pages/auth.dart';
 import './pages/dashboard.dart';
+import './services/auth.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: AuthPage(),
+      home: AuthPage(),
       // home: DashBoardPage(),
-      home: HomeScreen(),
+      // home: HomeScreen(),
     );
   }
 }
