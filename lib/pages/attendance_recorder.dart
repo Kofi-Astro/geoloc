@@ -55,7 +55,7 @@ class _AttendancePageState extends State<AttendancePage> {
         margin: const EdgeInsets.symmetric(
           vertical: 20,
         ),
-        height: 150,
+        height: 100,
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: [
@@ -64,19 +64,19 @@ class _AttendancePageState extends State<AttendancePage> {
             ),
             Padding(
               padding: const EdgeInsets.all(8),
-              child: boxes(30.744600, 76.652496, "Office 7"),
+              child: boxes(5.60159, -0.22558, "Office 7"),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: boxes(30.744600, 76.652496, "Office 5"),
+              child: boxes(5.58476, -0.16780, "Office 5"),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: boxes(30.744600, 76.652496, "Office 1"),
+              child: boxes(5.56150, -0.19866, "Office 1"),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: boxes(30.744600, 76.652496, "Office 3"),
+              child: boxes(5.55453, -0.19303, "Office 3"),
             ),
           ],
         ),
@@ -89,57 +89,44 @@ class _AttendancePageState extends State<AttendancePage> {
         onTap: () {
           _gotoLocation(lat, long);
         },
-        child: FittedBox(
-          child: Material(
-            color: Colors.white,
-            elevation: 14.0,
-            borderRadius: BorderRadius.circular((24.0)),
-            shadowColor: Colors.purple,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(
-                  width: 180,
-                  height: 200,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(24.0),
-                    child: const Image(
-                      fit: BoxFit.scaleDown,
-                      image: AssetImage(
-                        'assets/images/office.png',
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(officeName),
-                ),
-              ],
-            ),
+        child: Material(
+          color: Colors.white,
+          elevation: 14.0,
+          borderRadius: BorderRadius.circular((24.0)),
+          shadowColor: Colors.purple,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              // SizedBox(
+              //   width: 60,
+              //   height: 80,
+              //   child: ClipRRect(
+              //     borderRadius: BorderRadius.circular(24.0),
+              //     child: const Image(
+              //       fit: BoxFit.contain,
+              //       image: AssetImage(
+              //         'assets/images/office.png',
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(officeName),
+              ),
+            ],
           ),
         ));
   }
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
   Widget googleMap(BuildContext context) {
     return SizedBox(
-        height: MediaQuery.of(context).size.height, //* 0.5,
-        width: MediaQuery.of(context).size.width, //* 0.5,
+        height: MediaQuery.of(context).size.height * 0.7,
+        width: MediaQuery.of(context).size.width,
         child: GoogleMap(
           mapType: MapType.hybrid,
-          initialCameraPosition: _kGooglePlex,
-          // CameraPosition(target: LatLng(20.5937, 78.9629), zoom: 12),
+          initialCameraPosition:
+              const CameraPosition(target: LatLng(5.56936, -0.17509), zoom: 20),
           onMapCreated: (GoogleMapController controller) {
             _mapController.complete(controller);
           },
@@ -149,7 +136,7 @@ class _AttendancePageState extends State<AttendancePage> {
   Future<void> _gotoLocation(double lat, double long) async {
     final GoogleMapController controller = await _mapController.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(lat, long), zoom: 15, tilt: 50.0, bearing: 45.0)));
+        target: LatLng(lat, long), zoom: 20, tilt: 70.0, bearing: 50.0)));
   }
 }
 
