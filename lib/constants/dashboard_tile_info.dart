@@ -40,10 +40,63 @@ List<List> infoAboutTiles = [
   ],
 ];
 
-
-
-
-
+Widget buildTile(
+    IconData icon, String title, String subtitle, BuildContext context,
+    [Function(BuildContext)? onTap]) {
+  return Material(
+    elevation: 10,
+    shadowColor: Colors.deepPurpleAccent,
+    borderRadius: BorderRadius.circular(12),
+    color: Colors.deepPurpleAccent,
+    child: InkWell(
+      onTap: onTap != null
+          ? () {
+              onTap(context);
+            }
+          : () {
+              print('Not set yet');
+            },
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Material(
+              color: Colors.white70,
+              shape: const CircleBorder(),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Icon(
+                  icon,
+                  color: Colors.deepPurple,
+                  size: 30,
+                ),
+              ),
+            ),
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white70,
+                fontWeight: FontWeight.w500,
+                fontSize: 18,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              subtitle,
+              style: const TextStyle(
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
 
 
 

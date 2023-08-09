@@ -97,19 +97,19 @@ class _AttendancePageState extends State<AttendancePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              // SizedBox(
-              //   width: 60,
-              //   height: 80,
-              //   child: ClipRRect(
-              //     borderRadius: BorderRadius.circular(24.0),
-              //     child: const Image(
-              //       fit: BoxFit.contain,
-              //       image: AssetImage(
-              //         'assets/images/office.png',
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              SizedBox(
+                width: 60,
+                height: 80,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24.0),
+                  child: const Image(
+                    fit: BoxFit.contain,
+                    image: AssetImage(
+                      'assets/images/office.png',
+                    ),
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(officeName),
@@ -121,10 +121,10 @@ class _AttendancePageState extends State<AttendancePage> {
 
   Widget googleMap(BuildContext context) {
     return SizedBox(
-        height: MediaQuery.of(context).size.height * 0.7,
+        height: MediaQuery.of(context).size.height * 0.73,
         width: MediaQuery.of(context).size.width,
         child: GoogleMap(
-          mapType: MapType.hybrid,
+          mapType: MapType.normal,
           initialCameraPosition:
               const CameraPosition(target: LatLng(5.56936, -0.17509), zoom: 20),
           onMapCreated: (GoogleMapController controller) {
@@ -136,7 +136,7 @@ class _AttendancePageState extends State<AttendancePage> {
   Future<void> _gotoLocation(double lat, double long) async {
     final GoogleMapController controller = await _mapController.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(lat, long), zoom: 20, tilt: 70.0, bearing: 50.0)));
+        target: LatLng(lat, long), zoom: 20, tilt: 10.0, bearing: 100.0)));
   }
 }
 

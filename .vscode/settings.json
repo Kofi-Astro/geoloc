@@ -7,6 +7,10 @@
 		"**/.DS_Store": true,
 		"**/Thumbs.db": true
 	},
-	"hide-files.files": [],
+	"hide-files.files": [
+		"geofencing/.dart_tool",
+		"geofencing/.idea",
+		"geofencing/.vscode"
+	],
 	"java.configuration.updateBuildConfiguration": "interactive"
 }

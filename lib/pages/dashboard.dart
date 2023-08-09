@@ -9,9 +9,6 @@ class DashBoardPage extends StatefulWidget {
   final AnimationController? controller;
   const DashBoardPage({super.key, this.controller});
 
-  // <meta-data android:name="com.google.android.geo.API_KEY"
-  //                       android:value="AIzaSyDn0xBWGcHZLlbA8kCy22CO81rdlc_0gdk"/>
-
   @override
   State<DashBoardPage> createState() => _DashBoardPageState();
 }
@@ -31,7 +28,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
               0.0,
               frontPanelHeight,
             ),
-            end: RelativeRect.fromLTRB(0, 0.0, 0.0, 0.0))
+            end: const RelativeRect.fromLTRB(0, 0.0, 0.0, 0.0))
         .animate(
             CurvedAnimation(parent: widget.controller!, curve: Curves.linear));
   }
@@ -41,7 +38,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
       child: Stack(children: [
         Container(
           color: Colors.deepPurple,
-          child: Center(
+          child: const Center(
               child: Text(
             'Navigation Panel',
             style: TextStyle(fontSize: 24, color: Colors.white),
@@ -51,7 +48,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
             rect: getPanelAnimation(constraints),
             child: Material(
               elevation: 12,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(
                   16,
@@ -88,134 +85,214 @@ class DashboardMainPanel extends StatelessWidget {
     return widgets;
   }
 
-  Widget buildTile(
-      IconData icon, String title, String subtitle, BuildContext context,
-      [Function(BuildContext)? onTap]) {
-    return Material(
-      elevation: 10,
-      shadowColor: Colors.deepPurpleAccent,
-      borderRadius: BorderRadius.circular(12),
-      color: Colors.deepPurpleAccent,
-      child: InkWell(
-        onTap: onTap != null
-            ? () {
-                onTap(context);
-              }
-            : () {
-                print('Not set yet');
-              },
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Material(
-                color: Colors.white70,
-                shape: const CircleBorder(),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Icon(
-                    icon,
-                    color: Colors.deepPurple,
-                    size: 30,
-                  ),
-                ),
-              ),
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white70,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                subtitle,
-                style: const TextStyle(
-                    color: Colors.white70,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: StaggeredGrid.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        children: _listWidget(context),
+    return Container(
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(39, 59, 151, 204),
+              Color.fromARGB(220, 113, 51, 228)
+            ],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topRight,
+          ),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16), topRight: Radius.circular(16))),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: StaggeredGrid.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+          children: _listWidget(context),
+        ),
       ),
     );
   }
 }
 
-// return Scaffold(
-//   backgroundColor: const Color(0xffffffff),
-//   appBar: PreferredSize(
-//     preferredSize: const Size.fromHeight(90.0),
-//     child: AppBar(
-//       leading: const Padding(
-//         padding: EdgeInsets.all(21),
-//         child: Icon(
-//           Icons.equalizer,
-//           color: Colors.deepPurpleAccent,
-//           size: 50,
+
+
+// class NavigationPanel extends StatefulWidget {
+//   // final User user;
+
+//   // NavigationPanel({required this.user});
+
+//   @override
+//   _NavigationPanelState createState() => _NavigationPanelState();
+// }
+
+// class _NavigationPanelState extends State<NavigationPanel> {
+//   // final _databaseReference = FirebaseDatabase.instance.reference();
+
+//   Widget drawerTile(String title, Function() onTap, [IconData? icon]) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+//       child: OutlinedButton(
+//         style: ButtonStyle(
+//           shape: MaterialStateProperty.resolveWith(
+//             (states) => RoundedRectangleBorder(
+//               borderRadius: new BorderRadius.circular(30.0),
+//             ),
+//           ),
+//           overlayColor: MaterialStateProperty.resolveWith(
+//             (states) {
+//               if (states.contains(MaterialState.hovered)) {
+//                 return Colors.transparent;
+//               }
+//             },
+//           ),
+//           side: MaterialStateProperty.resolveWith(
+//             (states) => BorderSide(
+//               color: Colors.white, //Color of the border
+//               style: BorderStyle.solid, //Style of the border
+//               width: 0.8, //width of the border
+//             ),
+//           ),
 //         ),
-//       ),
-//       title: const Padding(
-//         padding: EdgeInsets.only(top: 35, left: 8),
-//         child: Text(
-//           'DASHBOARD',
-//           style: TextStyle(
-//               fontSize: 20,
-//               color: Colors.blue,
-//               fontWeight: FontWeight.w900),
+//         child: ListTile(
+//           contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+//           leading: Icon(
+//             icon,
+//             size: 35,
+//             color: Colors.white,
+//           ),
+//           title: Text(
+//             title,
+//             style: TextStyle(
+//               fontFamily: "Poppins-Medium",
+//               color: Colors.white,
+//               fontSize: 18,
+//             ),
+//           ),
 //         ),
+//         onPressed: onTap,
 //       ),
-//       flexibleSpace: Container(
-//         decoration: const BoxDecoration(
-//           gradient: LinearGradient(
-//               colors: [
-//                 Color(0xffffffff),
-//                 Color(0xffffffff),
-//               ],
-//               begin: FractionalOffset(
-//                 0.0,
-//                 0.0,
-//               ),
-//               end: FractionalOffset(1.0, 0.0),
-//               stops: [0.0, 1.0],
-//               tileMode: TileMode.clamp),
-//         ),
-//       ),
-//       elevation: 10,
-//     ),
-//   ),
-//   body: Padding(
-//     padding: const EdgeInsets.all(8),
-//     child: StaggeredGrid.count(
-//       crossAxisCount: 2,
-//       crossAxisSpacing: 12,
-//       mainAxisSpacing: 12,
-//       children: _listWidget(),
-//     ),
-//   ),
-// ); // List<StaggeredGridTile> _staggeredTiles(int index) {
-//   List<StaggeredGridTile> widgets = [];
-//   tileData.forEach((tile) {
-//     widgets.add(StaggeredGridTile.extent(
-//         crossAxisCellCount: 1, mainAxisExtent: 210, child: tile[index]));
-//   });
-//   return widgets;
+//     );
+//   }
+
+
+//   Future<String> fetchOfficeName() async {
+//     DataSnapshot dataSnapshot =( await _databaseReference
+//         .child("users")
+//         .child(widget.user.uid)
+//         .child("allotted_office")
+//         .once()).snapshot;
+//     DataSnapshot snapshot = (await _databaseReference
+//         .child("location")
+//         .child(dataSnapshot.value as String)
+//         .child("name")
+//         .once()).snapshot;
+//     return snapshot.value as String;
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//         padding: EdgeInsets.symmetric(horizontal: 5.0),
+//         color: dashBoardColor,
+//         child: ListView(
+//           children: <Widget>[
+//             FutureBuilder(
+//               future: fetchOfficeName(),
+//               // ignore: missing_return
+//               builder: (context, snapshot) {
+//                 switch (snapshot.connectionState) {
+//                   case ConnectionState.none:
+//                     return Text(
+//                       'Press the button to fetch data',
+//                       textAlign: TextAlign.center,
+//                     );
+
+//                   case ConnectionState.active:
+
+//                   case ConnectionState.waiting:
+//                     return Container();
+
+//                   case ConnectionState.done:
+//                     if (snapshot.hasError)
+//                       return Text(
+//                         'Error:\n\n${snapshot.error}',
+//                         textAlign: TextAlign.center,
+//                       );
+//                     return Stack(children: [
+//                       drawerTile("Allocated Location: ${snapshot.data}", () {},
+//                           Icons.location_on),
+//                     ]);
+
+//                     return Container();
+//                 }
+//               },
+//             ),
+//             FutureBuilder(
+//               future: _databaseReference
+//                   .child("users")
+//                   .child(widget.user.uid)
+//                   .child("isManager")
+//                   .once(),
+//               // ignore: missing_return
+//               builder: (context, snapshot) {
+//                 switch (snapshot.connectionState) {
+//                   case ConnectionState.none:
+//                     return Text(
+//                       'Press the button to fetch data',
+//                       textAlign: TextAlign.center,
+//                     );
+
+//                   case ConnectionState.active:
+
+//                   case ConnectionState.waiting:
+//                     return Container();
+
+//                   case ConnectionState.done:
+//                     if (snapshot.hasError)
+//                       return Text(
+//                         'Error:\n\n${snapshot.error}',
+//                         textAlign: TextAlign.center,
+//                       );
+//                     print(snapshot.data?.snapshot.value);
+//                     if (snapshot.data?.snapshot.value == null ||
+//                         snapshot.data?.snapshot.value == 1)
+//                       // return Stack(children: [
+//                       //   drawerTile("Review Pending Leaves", () {
+//                       //     Navigator.of(context).push(MaterialPageRoute(
+//                       //         builder: (context) =>
+//                       //             LeaveApprovalByManagerWidget(
+//                       //               title: "Review Leaves",
+//                       //               user: widget.user,
+//                       //             )));
+//                       //   }, Icons.perm_identity),
+//                       //   Positioned(
+//                       //     child: Icon(
+//                       //       Icons.notifications,
+//                       //       color: Colors.yellow,
+//                       //       size: 30,
+//                       //     ),
+//                       //     right: 17,
+//                       //     height: 40,
+//                       //   ),
+//                       // ]);
+//                       return Container();
+
+//                     return Container();
+//                 }
+//               },
+//             ),
+//             drawerTile("Edit your Profile", () {
+//               Navigator.of(context).push(MaterialPageRoute(
+//                   builder: (context) => ProfilePage(
+//                         user: widget.user,
+//                       )));
+//             }, Icons.perm_identity),
+//             drawerTile("Logout", () {
+//               Auth auth = new Auth();
+//               auth.signOut();
+//               Navigator.of(context).pushAndRemoveUntil(
+//                   MaterialPageRoute(builder: (context) => Login()),
+//                   (Route<dynamic> route) => false);
+//             }, Icons.exit_to_app),
+//           ],
+//         ));
+//   }
 // }
