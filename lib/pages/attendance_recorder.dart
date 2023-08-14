@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:maps_toolkit/maps_toolkit.dart' as mp;
 
 class AttendancePage extends StatefulWidget {
   const AttendancePage({super.key});
@@ -15,6 +16,35 @@ class AttendancePage extends StatefulWidget {
 class _AttendancePageState extends State<AttendancePage> {
   final Completer<GoogleMapController> _mapController =
       Completer<GoogleMapController>();
+
+  // final LatLng initialLocation = LatLng(5.56936, -0.17509);
+  final LatLng initialLocation = LatLng(5.569659073468826, -0.1744371670533428);
+  bool _selectedArea = true;
+  LatLng? finalPosition = LatLng(5.569659073468826, -0.1744371670533428);
+
+  List<LatLng> polyPoints = [
+    LatLng(5.569296015089658, -0.1751130836676392),
+    LatLng(5.568708714295462, -0.17467320142658915),
+    LatLng(5.568730070698261, -0.17423331918553914),
+    LatLng(5.568879565496126, -0.17425477685583424),
+    LatLng(5.56975517711987, -0.17310679149504518),
+    LatLng(5.5702143387912635, -0.17504871065675381),
+  ];
+
+  void updateLocation(LatLng pointLagLgn) async {
+    List<mp.LatLng> convertedPolygonPoints = polyPoints
+        .map((point) => mp.LatLng(point.latitude, point.longitude))
+        .toList();
+    setState(() {
+      _selectedArea = mp.PolygonUtil.containsLocation(
+          mp.LatLng(
+            pointLagLgn.latitude,
+            pointLagLgn.longitude,
+          ),
+          convertedPolygonPoints,
+          false);
+    });
+  }
 
   @override
   void initState() {
@@ -43,7 +73,14 @@ class _AttendancePageState extends State<AttendancePage> {
       ),
       body: Stack(children: [
         googleMap(context),
-        buildContainer(),
+        // buildContainer(),
+        Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+                child: Text(
+              _selectedArea ? 'At work' : 'Outside work',
+              style: TextStyle(fontSize: 35),
+            ))),
       ]),
     );
   }
@@ -126,16 +163,38 @@ class _AttendancePageState extends State<AttendancePage> {
         child: GoogleMap(
           mapType: MapType.normal,
           initialCameraPosition:
-              const CameraPosition(target: LatLng(5.56936, -0.17509), zoom: 20),
+              CameraPosition(target: initialLocation, zoom: 19),
           onMapCreated: (GoogleMapController controller) {
             _mapController.complete(controller);
           },
-          markers: {office1Marker},
-          circles: {
-            Circle(
-                circleId: CircleId('office1'),
-                center: LatLng(5.56936, -0.17509),
-                radius: 430)
+          markers: {
+            Marker(
+                markerId: MarkerId('marker'),
+                position: finalPosition!,
+                icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueBlue),
+                draggable: true,
+                // consumeTapEvents: true,
+                onDragEnd: (updatedValue) {
+                  finalPosition = updatedValue;
+                  updateLocation(updatedValue);
+                })
+          },
+          // circles: {
+          //   Circle(
+          //       circleId: CircleId('circle'),
+          //       center: initialLocation,
+          //       radius: 25,
+          //       // consumeTapEvents: true,
+          //       strokeWidth: 2,
+          //       fillColor: Colors.lightBlue.withOpacity(0.5))
+          // },
+          polygons: {
+            Polygon(
+                polygonId: PolygonId('1'),
+                fillColor: Colors.blue.withOpacity(0.5),
+                strokeWidth: 2,
+                points: polyPoints)
           },
         ));
   }
@@ -143,12 +202,6 @@ class _AttendancePageState extends State<AttendancePage> {
   Future<void> _gotoLocation(double lat, double long) async {
     final GoogleMapController controller = await _mapController.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(lat, long), zoom: 20, tilt: 10.0, bearing: 100.0)));
+        target: LatLng(lat, long), zoom: 19, tilt: 10.0, bearing: 100.0)));
   }
 }
-
-Marker office1Marker = Marker(
-  markerId: MarkerId('office1'),
-  position: LatLng(5.56936, -0.17509),
-  icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet),
-);
