@@ -130,6 +130,13 @@ class _AttendancePageState extends State<AttendancePage> {
           onMapCreated: (GoogleMapController controller) {
             _mapController.complete(controller);
           },
+          markers: {office1Marker},
+          circles: {
+            Circle(
+                circleId: CircleId('office1'),
+                center: LatLng(5.56936, -0.17509),
+                radius: 430)
+          },
         ));
   }
 
@@ -140,8 +147,8 @@ class _AttendancePageState extends State<AttendancePage> {
   }
 }
 
-// Marker office1Marker = Marker(
-//   markerId: MarkerId('office1'),
-//   position: LatLng(30.744600, 76.652496),
-//   icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet),
-// );
+Marker office1Marker = Marker(
+  markerId: MarkerId('office1'),
+  position: LatLng(5.56936, -0.17509),
+  icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet),
+);
